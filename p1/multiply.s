@@ -52,6 +52,19 @@ main:
 #End main
 
 
+# Function mult(r0, r1)
+#
+# mult multiplies 2 numbers using recursive addition
+# Inputs
+#    r0 - first multiple
+#    r1 - second multiple
+# Variables
+#    r4 - first multiple
+#    r5 - second multiple
+# Outputs
+#    r0 - product
+
+
 .text
 .global mult
 
@@ -74,6 +87,7 @@ mult:
    # if error block
       LDR r0, =errMsg
       BL printf
+      MOV r0, #0
       B Return
    # end if error block
    Else2:
@@ -108,4 +122,4 @@ mult:
       MOV pc, lr
 
 .data
-   errMsg: .asciz "You must enter a number greater than zero!!!\n"
+   errMsg: .asciz "You must enter a number greater than zero for the second argument!!!\n"

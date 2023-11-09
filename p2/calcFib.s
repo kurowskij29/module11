@@ -1,10 +1,10 @@
 
 
 #
-# Program name: multiply.s
+# Program name: calcFib.s
 # Author: Jack Kurowski
 # Date: 11/7/2023
-# Purpose: This program calculates the product of 2 numbers
+# Purpose: This program calculates the fibonacci number of an input
 #
 
 .text
@@ -48,6 +48,17 @@ main:
 #End main
 
 
+# Function
+#
+# fib(r0) calculates the fibonacci number of an input
+# Inputs
+#     r0 - input integer
+# Variables
+#     r4 - store input number
+#     r5 - fib(n-1)
+#     r6 - fib(n-2)
+# Outputs
+#     r0 - fibonacci number
 
 .text
 .global fib
@@ -69,30 +80,34 @@ fib:
    # if error block
       LDR r0, =errMsg
       BL printf
+      MOV r0, #-1
       B Return
    # end if error block
    Else2:
       CMP r4, #0
-      BNE Elif1 
+      BNE Elif1  // return 0 for fib(0)
       # if1 block
          MOV r0, #0
          B Return
       # end if block
       Elif1:
       CMP r4, #1
-      BNE Else 
+      BNE Else // return 1 for fib(1)
       # if2 block
          MOV r0, #1
          B Return
       # end if block
       Else: 
       # else block
+         # calc fib(n-1) and store in r5
          SUB r0, r4, #1
          BL fib
          MOV r5, r0
+         # calc fib(n-2) and store in r6
          SUB r0, r4, #2
          BL fib
          MOV r6, r0
+         # add fib(n-1) and fib(n-2)
          ADD r0, r5, r6
          B Return
       # end else block
